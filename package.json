@@ -1,0 +1,42 @@
+{
+  "name": "design-tokens-demo",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "gen-tokens": "run-s gen-tokens-*",
+    "gen-tokens-global": "token-transformer tokens/tokens.json tokens/output/global.json global",
+    "gen-tokens-semantic": "token-transformer tokens/tokens.json tokens/output/semantic.json global,semantic global",
+    "gen-tokens-brand1-light": "token-transformer tokens/tokens.json tokens/output/brand1-light.json global,brand1-light global",
+    "gen-tokens-brand1-dark": "token-transformer tokens/tokens.json tokens/output/brand1-dark.json global,brand1-dark global",
+    "gen-tokens-brand2-light": "token-transformer tokens/tokens.json tokens/output/brand2-light.json global,brand2-light global",
+    "gen-tokens-brand2-dark": "token-transformer tokens/tokens.json tokens/output/brand2-dark.json global,brand2-dark global",
+    "gen-styles": "node ./infrastructure/generate-styles.js",
+    "postcss": "postcss apps/advisor-desktop-css/src/styles/styles.css -o apps/advisor-desktop-css/src/main.css",
+    "token-pipeline": "run-s gen-tokens gen-styles postcss"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.4",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.12",
+    "postcss-cli": "^9.1.0",
+    "postcss-import": "^14.0.2",
+    "prettier": "^2.6.0",
+    "style-dictionary": "^3.7.0",
+    "token-transformer": "^0.0.19",
+    "turbo": "latest"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "packageManager": "npm@8.4.0"
+}
